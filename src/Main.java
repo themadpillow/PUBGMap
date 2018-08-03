@@ -43,11 +43,11 @@ public class Main extends JavaPlugin implements Listener{
 
 		border.setSize(500);
 
-		for(Player p : Bukkit.getOnlinePlayers()){
+	}
+
+	public void giveMap(Player p){
 			p.getInventory().addItem(itemMap);
 			p.sendMap(map);
-		}
-
 	}
 
 	void setNextBorder(int size, int delay, int time){
