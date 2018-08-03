@@ -41,7 +41,7 @@ public class Commands implements CommandExecutor {
 		if(cmd.getName().equalsIgnoreCase("resetmap")){
 			WorldBorder border = Bukkit.getWorlds().get(0).getWorldBorder();
 			border.setCenter(Main.MAP_CENTERX, Main.MAP_CENTERZ);
-
+			Main.centerAddX = Main.centerAddZ = 0;
 			border.setSize(500);
 
 			for(int i = 1; i < Main.map.getRenderers().size(); i ++){
