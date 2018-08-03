@@ -1,0 +1,12 @@
+main: Main
+version: 1.0.0
+name: PUBGMap
+softdepend: [WorldBorderAPI]
+commands:
+ next:
+   usage: /<command>
+   permission: op
+   permission-message: "§4このコマンドを実行するための権限がありません！"
+permissions:
+  op:
+    default: op
