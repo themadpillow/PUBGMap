@@ -16,9 +16,15 @@ public class NextRenderer extends MapRenderer{
 	Location center;
 	Location nextCenter;
 	int size;
+	double addx = Main.centerAddX;
+	double addz = Main.centerAddZ;
 
 	public NextRenderer(MapView map, Main main, int size, int delay, int time){
 
+
+		for(int i = 2; i < map.getRenderers().size(); i ++){
+			map.removeRenderer(map.getRenderers().get(i));
+		}
 		this.main = main;
 
 		border = Bukkit.getWorlds().get(0).getWorldBorder();
@@ -40,13 +46,15 @@ public class NextRenderer extends MapRenderer{
 		case 3:
 			break;
 		}
-		Main.centerAddX += x;
-		Main.centerAddZ += z;
 		nextCenter = border.getCenter().add(x, 0, z);
 		nextCenter = nextCenter.add(-Main.MAP_CENTERX, 0, -Main.MAP_CENTERZ + 150);
 
+		addx = Main.centerAddX + x;
+		addz = Main.centerAddZ + z;
 
 		new BukkitRunnable(){public void run(){
+			Main.centerAddX = addx;
+			Main.centerAddZ = addz;
 			border.setSize(size, time);
 		}}.runTaskLater(main, delay * 20L);
 		new BukkitRunnable(){
@@ -69,7 +77,7 @@ public class NextRenderer extends MapRenderer{
 
 					map.removeRenderer(thisRenderer);
 				}
-		}}.runTaskTimer(main, delay* 20L, time*5L);
+		}}.runTaskTimer(main, delay* 20L, 20L);
 	}
 
 	@Override
@@ -77,20 +85,20 @@ public class NextRenderer extends MapRenderer{
 		MapCursorCollection cursors = new MapCursorCollection();
 
 		cursors.addCursor(new MapCursor(
-				(byte) ((nextCenter.getBlockX()/10 + Main.centerAddX*0.1) - size/10*1.2 ),
-				(byte) ((nextCenter.getBlockZ()/10 + Main.centerAddZ*0.15) - size/10 ),
+				(byte) ((nextCenter.getBlockX()/10 + addx*0.1) - size/10*1.2 ),
+				(byte) ((nextCenter.getBlockZ()/10 + addz*0.15) - size/10 ),
 				(byte) 14, MapCursor.Type.RED_POINTER.getValue(), true));
 		cursors.addCursor(new MapCursor(
-				(byte) ((nextCenter.getBlockX()/10 + Main.centerAddX*0.1) + size/10*1.2 ),
-				(byte) ((nextCenter.getBlockZ()/10 + Main.centerAddZ*0.15) - size/10 ),
+				(byte) ((nextCenter.getBlockX()/10 + addx*0.1) + size/10*1.2 ),
+				(byte) ((nextCenter.getBlockZ()/10 + addz*0.15) - size/10 ),
 				(byte) 2, MapCursor.Type.RED_POINTER.getValue(), true));
 		cursors.addCursor(new MapCursor(
-				(byte) ((nextCenter.getBlockX()/10 + Main.centerAddX*0.1) + size/10*1.2 ),
-				(byte) ((nextCenter.getBlockZ()/10 + Main.centerAddZ*0.15) + size/10 ),
+				(byte) ((nextCenter.getBlockX()/10 + addx*0.1) + size/10*1.2 ),
+				(byte) ((nextCenter.getBlockZ()/10 + addz*0.15) + size/10 ),
 				(byte) 6, MapCursor.Type.RED_POINTER.getValue(), true));
 		cursors.addCursor(new MapCursor(
-				(byte) ((nextCenter.getBlockX()/10 + Main.centerAddX*0.1) - size/10*1.2 ),
-				(byte) ((nextCenter.getBlockZ()/10 + Main.centerAddZ*0.15) + size/10 ),
+				(byte) ((nextCenter.getBlockX()/10 + addx*0.1) - size/10*1.2 ),
+				(byte) ((nextCenter.getBlockZ()/10 + addz*0.15) + size/10 ),
 				(byte) 10, MapCursor.Type.RED_POINTER.getValue(), true));
 
 

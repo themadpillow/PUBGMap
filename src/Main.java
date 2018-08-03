@@ -18,7 +18,7 @@ public class Main extends JavaPlugin implements Listener{
 	public static double centerAddZ = 0;
 
 	private ItemStack itemMap = new ItemStack(Material.MAP);
-	private MapView map;
+	MapView map;
 
 
 
@@ -26,6 +26,7 @@ public class Main extends JavaPlugin implements Listener{
 		Commands Commands = new Commands(this);
 		getCommand("next").setExecutor(Commands);
 		getCommand("givemap").setExecutor(Commands);
+		getCommand("resetmap").setExecutor(Commands);
 
 		map = Bukkit.getMap((short)7);
 
