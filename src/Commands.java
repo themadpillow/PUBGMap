@@ -1,6 +1,7 @@
 
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -34,6 +35,17 @@ public class Commands implements CommandExecutor {
 					Main.giveMap(p);
 				}
 			}
+		}
+
+		if(cmd.getName().equalsIgnoreCase("resetmap")){
+			for(int i = 1; i < Main.map.getRenderers().size(); i ++){
+				 Main.map.removeRenderer( Main.map.getRenderers().get(i));
+			}
+
+			 Main.map.addRenderer(new Renderer());
+
+			 sender.sendMessage(ChatColor.RED+"§lmapをリセットしました");
+			 return true;
 		}
 		return false;
 	}
