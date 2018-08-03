@@ -25,6 +25,7 @@ public class Main extends JavaPlugin implements Listener{
 	public void onEnable(){
 		Commands Commands = new Commands(this);
 		getCommand("next").setExecutor(Commands);
+		getCommand("givemap").setExecutor(Commands);
 
 		map = Bukkit.getMap((short)7);
 
