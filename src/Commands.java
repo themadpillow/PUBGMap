@@ -47,8 +47,8 @@ public class Commands implements CommandExecutor {
 			for(int i = 1; i < Main.map.getRenderers().size(); i ++){
 				 Main.map.removeRenderer( Main.map.getRenderers().get(i));
 			}
-
-			 Main.map.addRenderer(new Renderer());
+			Main.map.addRenderer(new PlayerRenderer());
+			Main.map.addRenderer(new Renderer());
 
 
 			 sender.sendMessage(ChatColor.RED+"§lmapをリセットしました");
