@@ -1,3 +1,4 @@
+package Renderers;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.map.MapCanvas;
@@ -5,6 +6,8 @@ import org.bukkit.map.MapCursor;
 import org.bukkit.map.MapCursorCollection;
 import org.bukkit.map.MapRenderer;
 import org.bukkit.map.MapView;
+
+import main.Main;
 
 public class PlayerRenderer extends MapRenderer{
 

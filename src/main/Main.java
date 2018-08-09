@@ -1,3 +1,4 @@
+package main;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.WorldBorder;
@@ -6,6 +7,10 @@ import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.map.MapView;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import Renderers.NextRenderer;
+import Renderers.PlayerRenderer;
+import Renderers.Renderer;
 
 
 

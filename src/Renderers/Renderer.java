@@ -1,3 +1,4 @@
+package Renderers;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.WorldBorder;
@@ -7,6 +8,8 @@ import org.bukkit.map.MapCursor;
 import org.bukkit.map.MapCursorCollection;
 import org.bukkit.map.MapRenderer;
 import org.bukkit.map.MapView;
+
+import main.Main;
 
 public class Renderer extends MapRenderer{
 	WorldBorder border = Bukkit.getWorlds().get(0).getWorldBorder();

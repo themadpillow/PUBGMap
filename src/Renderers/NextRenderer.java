@@ -1,3 +1,4 @@
+package Renderers;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.WorldBorder;
@@ -8,6 +9,8 @@ import org.bukkit.map.MapCursorCollection;
 import org.bukkit.map.MapRenderer;
 import org.bukkit.map.MapView;
 import org.bukkit.scheduler.BukkitRunnable;
+
+import main.Main;
 
 public class NextRenderer extends MapRenderer{
 	MapRenderer thisRenderer = this;

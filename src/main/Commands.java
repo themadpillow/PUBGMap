@@ -1,3 +1,4 @@
+package main;
 
 
 import org.bukkit.Bukkit;
@@ -7,6 +8,9 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+
+import Renderers.PlayerRenderer;
+import Renderers.Renderer;
 
 public class Commands implements CommandExecutor {
 	public Main Main;
