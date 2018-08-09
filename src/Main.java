@@ -35,7 +35,7 @@ public class Main extends JavaPlugin implements Listener{
 		for(int i = 1; i < map.getRenderers().size(); i ++){
 			map.removeRenderer(map.getRenderers().get(i));
 		}
-
+		map.addRenderer(new PlayerRenderer());
 		map.addRenderer(new Renderer());
 		itemMap.setDurability(map.getId());
 
@@ -48,8 +48,7 @@ public class Main extends JavaPlugin implements Listener{
 	}
 
 	public void giveMap(Player p){
-			p.getInventory().addItem(itemMap);
-			p.sendMap(map);
+		p.getInventory().addItem(itemMap.clone());
 	}
 
 	void setNextBorder(int size, int delay, int time){
