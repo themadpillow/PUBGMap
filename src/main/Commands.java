@@ -9,7 +9,6 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import Renderers.PlayerRenderer;
 import Renderers.Renderer;
 
 public class Commands implements CommandExecutor {
@@ -48,11 +47,12 @@ public class Commands implements CommandExecutor {
 			Main.centerAddX = Main.centerAddZ = 0;
 			border.setSize(500);
 
-			for(int i = 1; i < Main.map.getRenderers().size(); i ++){
-				 Main.map.removeRenderer( Main.map.getRenderers().get(i));
+			for(int i = 0; i < Main.mapList.size(); i ++){
+			for(int j = 1; j < Main.mapList.get(i).getRenderers().size(); j ++){
+				Main.mapList.get(i).removeRenderer( Main.mapList.get(i).getRenderers().get(j));
 			}
-			Main.map.addRenderer(new PlayerRenderer());
-			Main.map.addRenderer(new Renderer());
+			Main.mapList.get(i).addRenderer(new Renderer());
+			}
 
 
 			 sender.sendMessage(ChatColor.RED+"§lmapをリセットしました");

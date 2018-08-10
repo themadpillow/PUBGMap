@@ -1,4 +1,12 @@
 package main;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.nio.channels.FileChannel;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.WorldBorder;
@@ -9,12 +17,13 @@ import org.bukkit.map.MapView;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import Renderers.NextRenderer;
-import Renderers.PlayerRenderer;
 import Renderers.Renderer;
 
 
 
 public class Main extends JavaPlugin implements Listener{
+
+	private final String map0path = Bukkit.getWorlds().get(0).getWorldFolder().getPath() + "\\data\\map_0.dat";
 
 	public static double MAP_CENTERX = -778.0;
 	public static double MAP_CENTERZ = 464.0;
@@ -22,9 +31,7 @@ public class Main extends JavaPlugin implements Listener{
 	public static double centerAddX = 0;
 	public static double centerAddZ = 0;
 
-	private ItemStack itemMap = new ItemStack(Material.MAP);
-	MapView map;
-
+	List<MapView> mapList = new ArrayList<MapView>();
 
 
 	public void onEnable(){
@@ -32,17 +39,6 @@ public class Main extends JavaPlugin implements Listener{
 		getCommand("next").setExecutor(Commands);
 		getCommand("givemap").setExecutor(Commands);
 		getCommand("resetmap").setExecutor(Commands);
-
-		map = Bukkit.getMap((short)7);
-
-		Bukkit.getPluginManager().registerEvents(this, this);
-
-		for(int i = 1; i < map.getRenderers().size(); i ++){
-			map.removeRenderer(map.getRenderers().get(i));
-		}
-		map.addRenderer(new PlayerRenderer());
-		map.addRenderer(new Renderer());
-		itemMap.setDurability(map.getId());
 
 
 		WorldBorder border = Bukkit.getWorlds().get(0).getWorldBorder();
@@ -53,10 +49,37 @@ public class Main extends JavaPlugin implements Listener{
 	}
 
 	public void giveMap(Player p){
-		p.getInventory().addItem(itemMap.clone());
+		if(Bukkit.getMap((short)mapList.size()) == null){
+			File fileIn = new File(map0path);
+			File fileOut = new File(new File(map0path).getParentFile().getPath()+"\\map_"+mapList.size()+".dat");
+
+			// FileChannelクラスのオブジェクトを生成する
+			try {
+				FileChannel inCh = new FileInputStream(fileIn).getChannel();
+				FileChannel outCh = new FileOutputStream(fileOut).getChannel();
+
+				//transferToメソッドを使用してファイルをコピーする
+				inCh.transferTo(0, inCh.size(), outCh);
+			} catch (IOException e) {
+				// TODO 自動生成された catch ブロック
+				e.printStackTrace();
+			}
+		}
+		MapView map = Bukkit.getMap((short)mapList.size());
+		ItemStack itemMap = new ItemStack(Material.MAP);
+
+		for(int i = 1; i < map.getRenderers().size(); i ++){
+			map.removeRenderer(map.getRenderers().get(i));
+		}
+		map.addRenderer(new Renderer());
+
+		itemMap.setDurability(map.getId());
+		p.getInventory().addItem(itemMap);
+		mapList.add(map);
 	}
 
 	void setNextBorder(int size, int delay, int time){
-			map.addRenderer(new NextRenderer(map, Main.this, size, delay, time));
+		for(int i = 0; i < mapList.size(); i ++)
+			mapList.get(i).addRenderer(new NextRenderer(mapList.get(i), Main.this, size, delay, time));
 	}
 }
