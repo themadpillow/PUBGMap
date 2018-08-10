@@ -15,6 +15,10 @@ commands:
    usage: /<command>
    permission: op
    permission-message: "§4このコマンドを実行するための権限がありません！"
+ clearmap:
+   usage: /<command>
+   permission: op
+   permission-message: "§4このコマンドを実行するための権限がありません！"
 permissions:
   op:
     default: op

@@ -23,8 +23,7 @@ import Renderers.Renderer;
 
 public class Main extends JavaPlugin implements Listener{
 
-	private final String map0path = Bukkit.getWorlds().get(0).getWorldFolder().getPath() + "\\data\\map_0.dat";
-
+	private String map0path = null;
 	public static double MAP_CENTERX = -778.0;
 	public static double MAP_CENTERZ = 464.0;
 
@@ -35,10 +34,12 @@ public class Main extends JavaPlugin implements Listener{
 
 
 	public void onEnable(){
+		map0path = Bukkit.getWorlds().get(0).getWorldFolder().getPath() + "\\data\\map_0.dat";
 		Commands Commands = new Commands(this);
 		getCommand("next").setExecutor(Commands);
 		getCommand("givemap").setExecutor(Commands);
 		getCommand("resetmap").setExecutor(Commands);
+		getCommand("clearmap").setExecutor(Commands);
 
 
 		WorldBorder border = Bukkit.getWorlds().get(0).getWorldBorder();

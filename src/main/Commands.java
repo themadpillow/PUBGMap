@@ -1,6 +1,8 @@
 package main;
 
 
+import java.util.ArrayList;
+
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.WorldBorder;
@@ -8,6 +10,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.map.MapView;
 
 import Renderers.Renderer;
 
@@ -48,15 +51,22 @@ public class Commands implements CommandExecutor {
 			border.setSize(500);
 
 			for(int i = 0; i < Main.mapList.size(); i ++){
-			for(int j = 1; j < Main.mapList.get(i).getRenderers().size(); j ++){
-				Main.mapList.get(i).removeRenderer( Main.mapList.get(i).getRenderers().get(j));
-			}
-			Main.mapList.get(i).addRenderer(new Renderer());
+				for(int j = 1; j < Main.mapList.get(i).getRenderers().size(); j ++){
+					Main.mapList.get(i).removeRenderer( Main.mapList.get(i).getRenderers().get(j));
+				}
+				Main.mapList.get(i).addRenderer(new Renderer());
 			}
 
 
-			 sender.sendMessage(ChatColor.RED+"§lmapをリセットしました");
-			 return true;
+			sender.sendMessage(ChatColor.RED+"§lMAPの表示をリセットしました");
+			return true;
+		}
+
+		if(cmd.getName().equalsIgnoreCase("clearmap")){
+			Main.mapList = new ArrayList<MapView>();
+			sender.sendMessage(ChatColor.RED+"§lMAPの保持情報をリセットしました");
+
+			return true;
 		}
 		return false;
 	}
