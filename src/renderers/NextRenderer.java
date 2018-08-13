@@ -1,4 +1,4 @@
-package Renderers;
+package renderers;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.WorldBorder;
@@ -35,7 +35,7 @@ public class NextRenderer extends MapRenderer{
 		center = border.getCenter().add(-Main.MAP_CENTERX, 0, -Main.MAP_CENTERZ + 150);
 
 		this.size = size;
-		int x = (int) (Math.random() * (border.getSize() - size));
+		int x = (int) (Math.random() * (border.getSize() - size)/2);
 		int z = x;
 
 		switch((int)(Math.random()*4)){
@@ -88,26 +88,25 @@ public class NextRenderer extends MapRenderer{
 
 	@Override
 	public void render(MapView arg0, MapCanvas mc, Player arg2) {
-		MapCursorCollection cursors = new MapCursorCollection();
 		double x = (nextCenter.getBlockX()/10 + addx*0.1);
 		double z = (nextCenter.getBlockZ()/10 + addz*0.15);
-
+		MapCursorCollection cursors = new MapCursorCollection();
 
 		MapCursor leftup = cursors.addCursor(new MapCursor(
-				(byte) (x - size/10*1.2 ),
-				(byte) (z - size/10 ),
+				(byte) ((x - size/10)*1.2 ),
+				(byte) ((z - size/10) * 1.2 ),
 				(byte) 14, MapCursor.Type.BLUE_POINTER.getValue(), true));
 		MapCursor rightup = cursors.addCursor(new MapCursor(
-				(byte) (x + size/10*1.2 ),
-				(byte) (z - size/10 ),
+				(byte) ((x + size/10)*1.2 ),
+				(byte) ((z - size/10) * 1.2 ),
 				(byte) 2, MapCursor.Type.BLUE_POINTER.getValue(), true));
 		MapCursor leftbot = cursors.addCursor(new MapCursor(
-				(byte) (x + size/10*1.2 ),
-				(byte) (z + size/10 ),
+				(byte) ((x + size/10)*1.2 ),
+				(byte) ((z + size/10) * 1.2 ),
 				(byte) 6, MapCursor.Type.BLUE_POINTER.getValue(), true));
 		MapCursor rightbot = cursors.addCursor(new MapCursor(
-				(byte) (x - size/10*1.2 ),
-				(byte) (z + size/10 ),
+				(byte) ((x - size/10)*1.2 ),
+				(byte) ((z + size/10) * 1.2 ),
 				(byte) 10, MapCursor.Type.BLUE_POINTER.getValue(), true));
 
 		if(smalling){

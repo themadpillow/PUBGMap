@@ -1,4 +1,4 @@
-package Renderers;
+package renderers;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.WorldBorder;
@@ -39,8 +39,8 @@ public class Renderer extends MapRenderer{
 		MapCursorCollection cursors = new MapCursorCollection();
 
 		MapCursor leftup = cursors.addCursor(new MapCursor(
-				(byte) (centerX - border.getSize()/10*1.2 ),
-				(byte) (centerY - border.getSize()/10*1.2 ), (byte) 14,
+				(byte) ((centerX - border.getSize()/10)*1.2 ),
+				(byte) ((centerY - border.getSize()/10)*1.2 ), (byte) 14,
 				MapCursor.Type.SMALL_WHITE_CIRCLE.getValue(), true));
 		cursors.addCursor(new MapCursor((byte)(leftup.getX() + 6),
 				(byte) (leftup.getY()),(byte) 14,
@@ -51,8 +51,8 @@ public class Renderer extends MapRenderer{
 
 
 		MapCursor rightup = cursors.addCursor(new MapCursor(
-				(byte) (centerX + border.getSize()/10*1.2 ),
-				(byte) (centerY - border.getSize()/10*1.2 ), (byte) 14,
+				(byte) ((centerX + border.getSize()/10)*1.2 ),
+				(byte) ((centerY - border.getSize()/10)*1.2 ), (byte) 14,
 				MapCursor.Type.SMALL_WHITE_CIRCLE.getValue(), true));
 		cursors.addCursor(new MapCursor((byte)(rightup.getX() - 6),
 				(byte) (rightup.getY()),(byte) 14,
@@ -62,8 +62,8 @@ public class Renderer extends MapRenderer{
 				MapCursor.Type.SMALL_WHITE_CIRCLE.getValue(), true));
 
 		MapCursor leftbot = cursors.addCursor(new MapCursor(
-				(byte) (centerX - border.getSize()/10*1.2 ),
-				(byte) (centerY + border.getSize()/10*1.2 ), (byte) 14,
+				(byte) ((centerX - border.getSize()/10)*1.2 ),
+				(byte) ((centerY + border.getSize()/10)*1.2 ), (byte) 14,
 				MapCursor.Type.SMALL_WHITE_CIRCLE.getValue(), true));
 		cursors.addCursor(new MapCursor((byte)(leftbot.getX() + 6),
 				(byte) (leftbot.getY()),(byte) 14,
@@ -73,8 +73,8 @@ public class Renderer extends MapRenderer{
 				MapCursor.Type.SMALL_WHITE_CIRCLE.getValue(), true));
 
 		MapCursor rightbot = cursors.addCursor(new MapCursor(
-				(byte) (centerX + border.getSize()/10*1.2 ),
-				(byte) (centerY + border.getSize()/10*1.2 ), (byte) 14,
+				(byte) ((centerX + border.getSize()/10)*1.2 ),
+				(byte) ((centerY + border.getSize()/10)*1.2 ), (byte) 14,
 				MapCursor.Type.SMALL_WHITE_CIRCLE.getValue(), true));
 		cursors.addCursor(new MapCursor((byte)(rightbot.getX() - 6),
 				(byte) (rightbot.getY()),(byte) 14,
