@@ -32,7 +32,7 @@ public class NextRenderer extends MapRenderer{
 		this.main = main;
 
 		border = Bukkit.getWorlds().get(0).getWorldBorder();
-		center = border.getCenter().add(-Main.MAP_CENTERX, 0, -Main.MAP_CENTERZ + 150);
+		center = border.getCenter().add(-Main.MAP_CENTERX + 20, 0, -Main.MAP_CENTERZ + 100);
 
 		this.size = size;
 		int x = (int) (Math.random() * (border.getSize() - size)/2);
@@ -51,7 +51,7 @@ public class NextRenderer extends MapRenderer{
 			break;
 		}
 		nextCenter = border.getCenter().add(x, 0, z);
-		nextCenter = nextCenter.add(-Main.MAP_CENTERX, 0, -Main.MAP_CENTERZ + 150);
+		nextCenter = nextCenter.add(-Main.MAP_CENTERX + 20, 0, -Main.MAP_CENTERZ + 100);
 
 		addx = Main.centerAddX + x;
 		addz = Main.centerAddZ + z;
@@ -89,24 +89,24 @@ public class NextRenderer extends MapRenderer{
 	@Override
 	public void render(MapView arg0, MapCanvas mc, Player arg2) {
 		double x = (nextCenter.getBlockX()/10 + addx*0.1);
-		double z = (nextCenter.getBlockZ()/10 + addz*0.15);
+		double z = (nextCenter.getBlockZ()/10 + addz*0.1);
 		MapCursorCollection cursors = new MapCursorCollection();
 
 		MapCursor leftup = cursors.addCursor(new MapCursor(
-				(byte) ((x - size/10)*1.2 ),
-				(byte) ((z - size/10) * 1.2 ),
+				(byte) ((x - size/10) * 1.3 ),
+				(byte) ((z - size/10) * 1.3 ),
 				(byte) 14, MapCursor.Type.BLUE_POINTER.getValue(), true));
 		MapCursor rightup = cursors.addCursor(new MapCursor(
-				(byte) ((x + size/10)*1.2 ),
-				(byte) ((z - size/10) * 1.2 ),
+				(byte) ((x + size/10) * 1.3 ),
+				(byte) ((z - size/10) * 1.3 ),
 				(byte) 2, MapCursor.Type.BLUE_POINTER.getValue(), true));
 		MapCursor leftbot = cursors.addCursor(new MapCursor(
-				(byte) ((x + size/10)*1.2 ),
-				(byte) ((z + size/10) * 1.2 ),
+				(byte) ((x + size/10) * 1.3 ),
+				(byte) ((z + size/10) * 1.3 ),
 				(byte) 6, MapCursor.Type.BLUE_POINTER.getValue(), true));
 		MapCursor rightbot = cursors.addCursor(new MapCursor(
-				(byte) ((x - size/10)*1.2 ),
-				(byte) ((z + size/10) * 1.2 ),
+				(byte) ((x - size/10) * 1.3 ),
+				(byte) ((z + size/10) * 1.3 ),
 				(byte) 10, MapCursor.Type.BLUE_POINTER.getValue(), true));
 
 		if(smalling){

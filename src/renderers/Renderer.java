@@ -13,7 +13,7 @@ import main.Main;
 
 public class Renderer extends MapRenderer{
 	WorldBorder border = Bukkit.getWorlds().get(0).getWorldBorder();
-	Location center = border.getCenter().add(-Main.MAP_CENTERX, 0, -Main.MAP_CENTERZ + 150);
+	Location center = border.getCenter().add(-Main.MAP_CENTERX + 20, 0, -Main.MAP_CENTERZ + 100);
 
 	public Renderer(){
 
@@ -22,20 +22,14 @@ public class Renderer extends MapRenderer{
 	@Override
 	public void render(MapView map, MapCanvas mc, Player p) {
 		border = Bukkit.getWorlds().get(0).getWorldBorder();
-		center = border.getCenter().add(-Main.MAP_CENTERX, 0, -Main.MAP_CENTERZ + 150);
-
-		MapCursorCollection cursors = new MapCursorCollection();
-		MapCursor centerCursor = new MapCursor((byte)(center.getBlockX()/10 + Main.centerAddX*0.1), (byte)(center.getBlockZ()/10 + Main.centerAddZ*0.15), (byte) 0, MapCursor.Type.SMALL_WHITE_CIRCLE.getValue(), true);
-		cursors.addCursor(centerCursor);
-
-		mc.setCursors(cursors);
+		center = border.getCenter().add(-Main.MAP_CENTERX + 20, 0, -Main.MAP_CENTERZ + 100);
 
 		lineRender(mc);
 	}
 
 	public void lineRender(MapCanvas mc){
 		double centerX = center.getBlockX()/10 + Main.centerAddX*0.1;
-		double centerY = center.getBlockZ()/10 + Main.centerAddZ*0.15;
+		double centerY = center.getBlockZ()/10 + Main.centerAddZ*0.1;
 		MapCursorCollection cursors = new MapCursorCollection();
 
 		MapCursor leftup = cursors.addCursor(new MapCursor(

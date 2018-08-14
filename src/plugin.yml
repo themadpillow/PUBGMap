@@ -4,11 +4,11 @@ name: PUBGMap
 softdepend: [WorldBorderAPI]
 commands:
  next:
-   usage: /<command>
+   usage: /<command> [size] [delay] [time]
    permission: op
    permission-message: "§4このコマンドを実行するための権限がありません！"
  givemap:
-   usage: /<command>
+   usage: /<command> [playerID(任意)]
    permission: op
    permission-message: "§4このコマンドを実行するための権限がありません！"
  resetmap:
