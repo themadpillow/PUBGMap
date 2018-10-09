@@ -40,7 +40,6 @@ public class Main extends JavaPlugin implements Listener {
 
 		WorldBorder border = Bukkit.getWorlds().get(0).getWorldBorder();
 		border.setCenter(MAP_CENTERX, MAP_CENTERZ);
-
 		border.setSize(500);
 
 		for (Player player : Bukkit.getOnlinePlayers()) {

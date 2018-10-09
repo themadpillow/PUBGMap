@@ -13,7 +13,6 @@ import org.bukkit.map.MapView;
 import main.Main;
 
 public class Renderer extends MapRenderer {
-
 	@Override
 	public void render(MapView mapView, MapCanvas mapCanvas, Player player) {
 		lineRender(mapCanvas);
