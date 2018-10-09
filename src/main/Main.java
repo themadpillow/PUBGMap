@@ -1,4 +1,5 @@
 package main;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -12,16 +13,15 @@ import org.bukkit.Material;
 import org.bukkit.WorldBorder;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.map.MapView;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import Renderers.NextRenderer;
-import Renderers.Renderer;
+import renderers.NextRenderer;
+import renderers.Renderer;
 
-
-
-public class Main extends JavaPlugin implements Listener{
+public class Main extends JavaPlugin implements Listener {
 
 	private String map0path = null;
 	public static double MAP_CENTERX = -778.0;
@@ -32,8 +32,7 @@ public class Main extends JavaPlugin implements Listener{
 
 	List<MapView> mapList = new ArrayList<MapView>();
 
-
-	public void onEnable(){
+	public void onEnable() {
 		map0path = Bukkit.getWorlds().get(0).getWorldFolder().getPath() + "\\data\\map_0.dat";
 		Commands Commands = new Commands(this);
 		getCommand("next").setExecutor(Commands);
@@ -41,18 +40,24 @@ public class Main extends JavaPlugin implements Listener{
 		getCommand("resetmap").setExecutor(Commands);
 		getCommand("clearmap").setExecutor(Commands);
 
-
 		WorldBorder border = Bukkit.getWorlds().get(0).getWorldBorder();
 		border.setCenter(MAP_CENTERX, MAP_CENTERZ);
 
 		border.setSize(500);
 
+		for (Player player : Bukkit.getOnlinePlayers()) {
+			Inventory inventory = player.getInventory();
+			if (inventory.contains(Material.MAP)) {
+				inventory.clear(inventory.first(Material.MAP));
+				giveMap(player);
+			}
+		}
 	}
 
-	public void giveMap(Player p){
-		if(Bukkit.getMap((short)mapList.size()) == null){
+	public void giveMap(Player p) {
+		if (Bukkit.getMap((short) mapList.size()) == null) {
 			File fileIn = new File(map0path);
-			File fileOut = new File(new File(map0path).getParentFile().getPath()+"\\map_"+mapList.size()+".dat");
+			File fileOut = new File(new File(map0path).getParentFile().getPath() + "\\map_" + mapList.size() + ".dat");
 
 			// FileChannelクラスのオブジェクトを生成する
 			try {
@@ -66,10 +71,10 @@ public class Main extends JavaPlugin implements Listener{
 				e.printStackTrace();
 			}
 		}
-		MapView map = Bukkit.getMap((short)mapList.size());
+		MapView map = Bukkit.getMap((short) mapList.size());
 		ItemStack itemMap = new ItemStack(Material.MAP);
 
-		for(int i = 1; i < map.getRenderers().size(); i ++){
+		for (int i = 1; i < map.getRenderers().size(); i++) {
 			map.removeRenderer(map.getRenderers().get(i));
 		}
 		map.addRenderer(new Renderer());
@@ -79,8 +84,9 @@ public class Main extends JavaPlugin implements Listener{
 		mapList.add(map);
 	}
 
-	void setNextBorder(int size, int delay, int time){
-		for(int i = 0; i < mapList.size(); i ++)
+	void setNextBorder(int size, int delay, int time) {
+		for (int i = 0; i < mapList.size(); i++) {
 			mapList.get(i).addRenderer(new NextRenderer(mapList.get(i), Main.this, size, delay, time));
+		}
 	}
 }
