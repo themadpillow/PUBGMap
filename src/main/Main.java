@@ -27,8 +27,6 @@ public class Main extends JavaPlugin implements Listener {
 	public static double MAP_CENTERX = -778.0;
 	public static double MAP_CENTERZ = 464.0;
 
-	public static double centerAddX = 0;
-	public static double centerAddZ = 0;
 
 	List<MapView> mapList = new ArrayList<MapView>();
 
@@ -85,8 +83,8 @@ public class Main extends JavaPlugin implements Listener {
 	}
 
 	void setNextBorder(int size, int delay, int time) {
-		for (int i = 0; i < mapList.size(); i++) {
-			mapList.get(i).addRenderer(new NextRenderer(mapList.get(i), Main.this, size, delay, time));
+		for (MapView mapView : mapList) {
+			mapView.addRenderer(new NextRenderer(mapView, Main.this, size, delay, time));
 		}
 	}
 }

@@ -14,27 +14,22 @@ import org.bukkit.scheduler.BukkitRunnable;
 import main.Main;
 
 public class NextRenderer extends MapRenderer {
-	MapRenderer thisRenderer = this;
 	Main main;
-	WorldBorder border;
-	Location center;
+	NextRenderer thisRenderer = this;
+	boolean smalling = false;
+	WorldBorder worldBorder;
 	Location nextCenter;
 	int size;
-	double addx = Main.centerAddX;
-	double addz = Main.centerAddZ;
-	boolean smalling = false;
 
 	public NextRenderer(MapView map, Main main, int size, int delay, int time) {
 		for (int i = 2; i < map.getRenderers().size(); i++) {
 			map.removeRenderer(map.getRenderers().get(i));
 		}
 		this.main = main;
-
-		border = Bukkit.getWorlds().get(0).getWorldBorder();
-		center = border.getCenter().add(-Main.MAP_CENTERX + 20, 0, -Main.MAP_CENTERZ + 100);
-
 		this.size = size;
-		int x = (int) (Math.random() * (border.getSize() - size) / 2);
+
+		worldBorder = Bukkit.getWorlds().get(0).getWorldBorder();
+		int x = (int) (Math.random() * (worldBorder.getSize() - size) / 2);
 		int z = x;
 
 		switch ((int) (Math.random() * 4)) {
@@ -49,31 +44,22 @@ public class NextRenderer extends MapRenderer {
 		case 3:
 			break;
 		}
-		nextCenter = border.getCenter().add(x, 0, z);
-		nextCenter = nextCenter.add(-Main.MAP_CENTERX + 20, 0, -Main.MAP_CENTERZ + 100);
-
-		addx = Main.centerAddX + x;
-		addz = Main.centerAddZ + z;
+		nextCenter = worldBorder.getCenter().add(x, 0, z);
+		double addX = x / time;
+		double addZ = z / time;
 
 		new BukkitRunnable() {
 			public void run() {
-				Main.centerAddX = addx;
-				Main.centerAddZ = addz;
-				border.setSize(size, time);
+				worldBorder.setSize(size, time);
 				smalling = true;
 			}
 		}.runTaskLater(main, delay * 20L);
 		new BukkitRunnable() {
-			double addX = (nextCenter.getX() - center.getX()) / time;
-			double addZ = (nextCenter.getZ() - center.getZ()) / time;
 			int timeTmp = time;
 
 			public void run() {
-				border.setCenter(
-						border.getCenter().add(
-								addX,
-								0,
-								addZ));
+				worldBorder.setCenter(
+						worldBorder.getCenter().add(addX, 0, addZ));
 
 				timeTmp--;
 				if (timeTmp == 0) {
@@ -88,25 +74,25 @@ public class NextRenderer extends MapRenderer {
 
 	@Override
 	public void render(MapView arg0, MapCanvas mc, Player arg2) {
-		double x = (nextCenter.getBlockX() / 10 + addx * 0.1);
-		double z = (nextCenter.getBlockZ() / 10 + addz * 0.1);
+		double mapX = (nextCenter.getX() - (size / 2)) - Main.MAP_CENTERX;
+		double mapZ = (nextCenter.getZ() - (size / 2)) - Main.MAP_CENTERZ;
 		MapCursorCollection cursors = new MapCursorCollection();
 
 		MapCursor leftup = cursors.addCursor(new MapCursor(
-				(byte) ((x - size / 10) * 1.3),
-				(byte) ((z - size / 10) * 1.3),
+				Byte.parseByte(String.valueOf((int) (mapX / 4))),
+				Byte.parseByte(String.valueOf((int) (mapZ / 4 + 15))),
 				(byte) 14, MapCursor.Type.BLUE_POINTER.getValue(), true));
-		MapCursor rightup = cursors.addCursor(new MapCursor(
-				(byte) ((x + size / 10) * 1.3),
-				(byte) ((z - size / 10) * 1.3),
-				(byte) 2, MapCursor.Type.BLUE_POINTER.getValue(), true));
 		MapCursor leftbot = cursors.addCursor(new MapCursor(
-				(byte) ((x + size / 10) * 1.3),
-				(byte) ((z + size / 10) * 1.3),
+				leftup.getX(),
+				Byte.parseByte(String.valueOf((int) (leftup.getY() + size / 4))),
 				(byte) 6, MapCursor.Type.BLUE_POINTER.getValue(), true));
+		MapCursor rightup = cursors.addCursor(new MapCursor(
+				Byte.parseByte(String.valueOf((int) (leftup.getX() + size / 4))),
+				leftup.getY(),
+				(byte) 2, MapCursor.Type.BLUE_POINTER.getValue(), true));
 		MapCursor rightbot = cursors.addCursor(new MapCursor(
-				(byte) ((x - size / 10) * 1.3),
-				(byte) ((z + size / 10) * 1.3),
+				rightup.getX(),
+				leftbot.getY(),
 				(byte) 10, MapCursor.Type.BLUE_POINTER.getValue(), true));
 
 		if (smalling) {
@@ -117,6 +103,5 @@ public class NextRenderer extends MapRenderer {
 		}
 
 		mc.setCursors(cursors);
-
 	}
 }

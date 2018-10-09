@@ -13,25 +13,22 @@ import org.bukkit.map.MapView;
 import main.Main;
 
 public class Renderer extends MapRenderer {
-	WorldBorder border = Bukkit.getWorlds().get(0).getWorldBorder();
-	Location center = border.getCenter().add(-Main.MAP_CENTERX + 20, 0, -Main.MAP_CENTERZ + 100);
 
 	@Override
-	public void render(MapView map, MapCanvas mc, Player p) {
-		border = Bukkit.getWorlds().get(0).getWorldBorder();
-		center = border.getCenter().add(-Main.MAP_CENTERX + 20, 0, -Main.MAP_CENTERZ + 100);
-
-		lineRender(mc);
+	public void render(MapView mapView, MapCanvas mapCanvas, Player player) {
+		lineRender(mapCanvas);
 	}
 
 	public void lineRender(MapCanvas mc) {
-		double centerX = center.getBlockX() / 10 + Main.centerAddX * 0.1;
-		double centerY = center.getBlockZ() / 10 + Main.centerAddZ * 0.1;
+		WorldBorder worldBorder = Bukkit.getWorlds().get(0).getWorldBorder();
+		Location center = Bukkit.getWorlds().get(0).getWorldBorder().getCenter();
 		MapCursorCollection cursors = new MapCursorCollection();
 
+		double mapX = (((center.getX() - (worldBorder.getSize() / 2)) - Main.MAP_CENTERX));
+		double mapZ = (((center.getZ() - (worldBorder.getSize() / 2)) - Main.MAP_CENTERZ));
 		MapCursor leftup = cursors.addCursor(new MapCursor(
-				(byte) ((centerX - border.getSize() / 10) * 1.2),
-				(byte) ((centerY - border.getSize() / 10) * 1.2), (byte) 14,
+				Byte.parseByte(String.valueOf((int) (mapX / 4))),
+				Byte.parseByte(String.valueOf((int) (mapZ / 4 + 15))), (byte) 14,
 				MapCursor.Type.SMALL_WHITE_CIRCLE.getValue(), true));
 		cursors.addCursor(new MapCursor((byte) (leftup.getX() + 6),
 				(byte) (leftup.getY()), (byte) 14,
@@ -40,9 +37,20 @@ public class Renderer extends MapRenderer {
 				(byte) (leftup.getY() + 6), (byte) 14,
 				MapCursor.Type.SMALL_WHITE_CIRCLE.getValue(), true));
 
+		MapCursor leftbot = cursors.addCursor(new MapCursor(
+				leftup.getX(),
+				Byte.parseByte(String.valueOf((int) (leftup.getY() + worldBorder.getSize() / 4))), (byte) 14,
+				MapCursor.Type.SMALL_WHITE_CIRCLE.getValue(), true));
+		cursors.addCursor(new MapCursor((byte) (leftbot.getX() + 6),
+				leftbot.getY(), (byte) 14,
+				MapCursor.Type.SMALL_WHITE_CIRCLE.getValue(), true));
+		cursors.addCursor(new MapCursor(leftbot.getX(),
+				(byte) (leftbot.getY() - 6), (byte) 14,
+				MapCursor.Type.SMALL_WHITE_CIRCLE.getValue(), true));
+
 		MapCursor rightup = cursors.addCursor(new MapCursor(
-				(byte) ((centerX + border.getSize() / 10) * 1.2),
-				(byte) ((centerY - border.getSize() / 10) * 1.2), (byte) 14,
+				Byte.parseByte(String.valueOf((int) (leftup.getX() + worldBorder.getSize() / 4))),
+				leftup.getY(), (byte) 14,
 				MapCursor.Type.SMALL_WHITE_CIRCLE.getValue(), true));
 		cursors.addCursor(new MapCursor((byte) (rightup.getX() - 6),
 				(byte) (rightup.getY()), (byte) 14,
@@ -51,20 +59,9 @@ public class Renderer extends MapRenderer {
 				(byte) (rightup.getY() + 6), (byte) 14,
 				MapCursor.Type.SMALL_WHITE_CIRCLE.getValue(), true));
 
-		MapCursor leftbot = cursors.addCursor(new MapCursor(
-				(byte) ((centerX - border.getSize() / 10) * 1.2),
-				(byte) ((centerY + border.getSize() / 10) * 1.2), (byte) 14,
-				MapCursor.Type.SMALL_WHITE_CIRCLE.getValue(), true));
-		cursors.addCursor(new MapCursor((byte) (leftbot.getX() + 6),
-				(byte) (leftbot.getY()), (byte) 14,
-				MapCursor.Type.SMALL_WHITE_CIRCLE.getValue(), true));
-		cursors.addCursor(new MapCursor((byte) leftbot.getX(),
-				(byte) (leftbot.getY() - 6), (byte) 14,
-				MapCursor.Type.SMALL_WHITE_CIRCLE.getValue(), true));
-
 		MapCursor rightbot = cursors.addCursor(new MapCursor(
-				(byte) ((centerX + border.getSize() / 10) * 1.2),
-				(byte) ((centerY + border.getSize() / 10) * 1.2), (byte) 14,
+				rightup.getX(),
+				leftbot.getY(), (byte) 14,
 				MapCursor.Type.SMALL_WHITE_CIRCLE.getValue(), true));
 		cursors.addCursor(new MapCursor((byte) (rightbot.getX() - 6),
 				(byte) (rightbot.getY()), (byte) 14,
@@ -75,5 +72,4 @@ public class Renderer extends MapRenderer {
 
 		mc.setCursors(cursors);
 	}
-
 }
