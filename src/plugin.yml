@@ -1,6 +1,6 @@
 main: main.Main
 version: 1.0.0
-name: PUBGMap
+name: GunBattleRoyalMap
 softdepend: [WorldBorderAPI]
 commands:
  next:
