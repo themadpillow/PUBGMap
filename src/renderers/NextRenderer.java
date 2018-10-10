@@ -79,13 +79,13 @@ public class NextRenderer extends MapRenderer {
 		MapCursorCollection cursors = new MapCursorCollection();
 
 		MapCursor leftup = cursors.addCursor(new MapCursor(
-				Byte.parseByte(String.valueOf((int) (mapX / 4))),
+				Byte.parseByte(String.valueOf((int) (mapX / 4 + 2))),
 				Byte.parseByte(String.valueOf((int) (mapZ / 4 + 15))),
 				(byte) 14, MapCursor.Type.BLUE_POINTER.getValue(), true));
 		MapCursor leftbot = cursors.addCursor(new MapCursor(
 				leftup.getX(),
 				Byte.parseByte(String.valueOf((int) (leftup.getY() + size / 4))),
-				(byte) 6, MapCursor.Type.BLUE_POINTER.getValue(), true));
+				(byte) 10, MapCursor.Type.BLUE_POINTER.getValue(), true));
 		MapCursor rightup = cursors.addCursor(new MapCursor(
 				Byte.parseByte(String.valueOf((int) (leftup.getX() + size / 4))),
 				leftup.getY(),
@@ -93,7 +93,7 @@ public class NextRenderer extends MapRenderer {
 		MapCursor rightbot = cursors.addCursor(new MapCursor(
 				rightup.getX(),
 				leftbot.getY(),
-				(byte) 10, MapCursor.Type.BLUE_POINTER.getValue(), true));
+				(byte) 6, MapCursor.Type.BLUE_POINTER.getValue(), true));
 
 		if (smalling) {
 			leftup.setType(MapCursor.Type.RED_POINTER);

@@ -26,7 +26,7 @@ public class Renderer extends MapRenderer {
 		double mapX = (((center.getX() - (worldBorder.getSize() / 2)) - Main.MAP_CENTERX));
 		double mapZ = (((center.getZ() - (worldBorder.getSize() / 2)) - Main.MAP_CENTERZ));
 		MapCursor leftup = cursors.addCursor(new MapCursor(
-				Byte.parseByte(String.valueOf((int) (mapX / 4))),
+				Byte.parseByte(String.valueOf((int) (mapX / 4 + 2))),
 				Byte.parseByte(String.valueOf((int) (mapZ / 4 + 15))), (byte) 14,
 				MapCursor.Type.SMALL_WHITE_CIRCLE.getValue(), true));
 		cursors.addCursor(new MapCursor((byte) (leftup.getX() + 6),
