@@ -29,8 +29,8 @@ public class NextRenderer extends MapRenderer {
 		this.size = size;
 
 		worldBorder = Bukkit.getWorlds().get(0).getWorldBorder();
-		int x = (int) (Math.random() * (worldBorder.getSize() - size) / 2);
-		int z = x;
+		double x = (Math.random() * (worldBorder.getSize() - size) / 2);
+		double z = x;
 
 		switch ((int) (Math.random() * 4)) {
 		case 0:
@@ -55,18 +55,17 @@ public class NextRenderer extends MapRenderer {
 			}
 		}.runTaskLater(main, delay * 20L);
 		new BukkitRunnable() {
-			int timeTmp = time;
+			int timeTmp = 0;
 
 			public void run() {
 				worldBorder.setCenter(
 						worldBorder.getCenter().add(addX, 0, addZ));
 
-				timeTmp--;
-				if (timeTmp == 0) {
+				if (++timeTmp == time) {
 					smalling = false;
-					this.cancel();
-
 					map.removeRenderer(thisRenderer);
+
+					this.cancel();
 				}
 			}
 		}.runTaskTimer(main, delay * 20L, 20L);
