@@ -9,6 +9,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.map.MapView;
 
 import renderers.Renderer;
@@ -32,12 +33,20 @@ public class Commands implements CommandExecutor {
 
 		if (cmd.getName().equalsIgnoreCase("givemap")) {
 			if (args.length != 0) {
-				if (Bukkit.getPlayerExact(args[0]) != null) {
-					Main.giveMap(Bukkit.getPlayerExact(args[0]));
+				Player player;
+				ItemStack map = null;
+				for (String arg : args) {
+					if ((player = Bukkit.getPlayerExact(arg)) != null) {
+						if (map == null) {
+							map = Main.createMap();
+						}
+						player.getInventory().addItem(map.clone());
+					}
 				}
 			} else {
 				for (Player p : Bukkit.getOnlinePlayers()) {
-					Main.giveMap(p);
+					ItemStack map = Main.createMap();
+					p.getInventory().addItem(map);
 				}
 			}
 
