@@ -8,6 +8,7 @@ import org.bukkit.WorldBorder;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.map.MapView;
@@ -33,14 +34,10 @@ public class Commands implements CommandExecutor {
 
 		if (cmd.getName().equalsIgnoreCase("givemap")) {
 			if (args.length != 0) {
-				Player player;
-				ItemStack map = null;
-				for (String arg : args) {
-					if ((player = Bukkit.getPlayerExact(arg)) != null) {
-						if (map == null) {
-							map = Main.createMap();
-						}
-						player.getInventory().addItem(map.clone());
+				ItemStack map = Main.createMap();
+				for (Entity entity : CommandUtils.getTargets(sender, args[0])) {
+					if (entity instanceof Player) {
+						((Player) entity).getInventory().addItem(map.clone());
 					}
 				}
 			} else {
