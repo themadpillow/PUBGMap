@@ -35,7 +35,7 @@ public class Commands implements CommandExecutor {
 		if (cmd.getName().equalsIgnoreCase("givemap")) {
 			if (args.length != 0) {
 				ItemStack map = Main.createMap();
-				for (Entity entity : CommandUtils.getTargets(sender, args[0])) {
+				for (Entity entity : Bukkit.selectEntities(sender, args[0])) {
 					if (entity instanceof Player) {
 						((Player) entity).getInventory().addItem(map.clone());
 					}
